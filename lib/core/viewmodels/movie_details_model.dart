@@ -9,10 +9,10 @@ class MovieDetailsModel extends BaseViewModel {
   final ApiService apiService = locator<ApiService>();
 
   Future<List<Cast>> getCast(int movieId) async {
-    return await apiService.getCast(movieId) ?? [];
+    return await apiService.getCast(movieId);
   }
 
   Future<List<Genre>> getGenres() async {
-    return await apiService.getGenres().then((value) => value ?? []);
+    return await apiService.getGenres();
   }
 }

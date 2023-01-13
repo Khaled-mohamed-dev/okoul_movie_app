@@ -8,8 +8,6 @@ class TrendingModel extends BaseViewModel {
   final ApiService apiService = locator<ApiService>();
 
   Future<List<Movie>> getTrendingMovies() async {
-    return await apiService.getTrendingMovies().then(
-          (value) => value?.movies ?? [],
-        );
+    return await apiService.getTrendingMovies().then((value) => value);
   }
 }

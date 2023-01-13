@@ -12,44 +12,44 @@ class ApiService {
 
   ApiService(this.client);
 
-  Future<MoviesQuery?> getNowPlayingMovies() async {
+  Future<List<Movie>> getNowPlayingMovies() async {
     final uri = Uri.parse(nowPlayingMoviesUrl);
     try {
       final response = await client.get(
         uri,
         headers: _headers,
       );
-      return moviesQueryFromJson(response.body);
+      return moviesQueryFromJson(response.body).movies;
     } catch (e) {
-      return null;
+      return [];
     }
   }
 
-  Future<MoviesQuery?> getUpcomingMovies() async {
+  Future<List<Movie>> getUpcomingMovies() async {
     final uri = Uri.parse(upcomingMoviesUrl);
     try {
       final response = await client.get(uri, headers: {
         HttpHeaders.authorizationHeader: "Bearer $tmdbAccessToken"
       });
-      return moviesQueryFromJson(response.body);
+      return moviesQueryFromJson(response.body).movies;
     } catch (e) {
-      return null;
+      return [];
     }
   }
 
-  Future<MoviesQuery?> getTrendingMovies() async {
+  Future<List<Movie>> getTrendingMovies() async {
     try {
       final uri = Uri.parse(trendingMoviesUrl);
       final response = await client.get(uri, headers: {
         HttpHeaders.authorizationHeader: "Bearer $tmdbAccessToken"
       });
-      return moviesQueryFromJson(response.body);
+      return moviesQueryFromJson(response.body).movies;
     } catch (e) {
-      return null;
+      return [];
     }
   }
 
-  Future<MoviesQuery?> getMoviesByGenre(int genreID) async {
+  Future<List<Movie>> getMoviesByGenre(int genreID) async {
     final uri = Uri.https(
       baseUrl,
       "/3/discover/movie",
@@ -60,13 +60,13 @@ class ApiService {
         uri,
         headers: _headers,
       );
-      return moviesQueryFromJson(response.body);
+      return moviesQueryFromJson(response.body).movies;
     } catch (e) {
-      return null;
+      return [];
     }
   }
 
-    Future<Movie?> getMovieById(int movieId) async {
+  Future<Movie?> getMovieById(int movieId) async {
     final uri = Uri.https(
       baseUrl,
       "/3/movie/$movieId",
@@ -76,14 +76,13 @@ class ApiService {
         uri,
         headers: _headers,
       );
-      return Movie.movieBydFromJson(jsonDecode(response.body)) ;
+      return Movie.movieBydFromJson(jsonDecode(response.body));
     } catch (e) {
       return null;
     }
   }
 
-
-  Future<List<Genre>?> getGenres() async {
+  Future<List<Genre>> getGenres() async {
     final uri = Uri.parse(genresUrl);
     try {
       final response = await client.get(
@@ -92,11 +91,11 @@ class ApiService {
       );
       return genresQueryFromJson(response.body).genres;
     } catch (e) {
-      return null;
+      return [];
     }
   }
 
-  Future<List<Cast>?> getCast(int movieId) async {
+  Future<List<Cast>> getCast(int movieId) async {
     final uri = Uri.https(
       baseUrl,
       "/3/movie/$movieId/credits",
@@ -109,7 +108,7 @@ class ApiService {
       );
       return castQueryFromJson(response.body).cast;
     } catch (e) {
-      return null;
+      return [];
     }
   }
 }
