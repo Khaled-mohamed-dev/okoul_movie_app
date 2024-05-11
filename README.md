@@ -4,4 +4,4 @@ This app was created for the Movie App challenge okoul.com. The challenge was to
 
 # Result
 
-I managed to achieve the 8th in that challange, and the result is here https://www.okoul.com/challenges/Movie%20App%20🎥
+I managed to achieve the 8th in that challange.
